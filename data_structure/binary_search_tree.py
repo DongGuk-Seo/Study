@@ -39,6 +39,21 @@ class NodeMgmt:
                 self.current_node = self.current_node.right
         return False
 
+# 이진 탐색 트리 삭제
+# Leaf Node 삭제 - 삭제할 Node의 Parent Node가 삭제할 Node를 가리키지 않도록 한다.
+# Child Node 삭제(Child Node가 단일 branch) - 삭제할 Node의 Parent Node가 삭제할 Node의 Child Node를 가리키도록 한다.
+# Child Node가 두 개인 Node 삭제
+## 1. 삭제할 Node 오른쪽 자식 중 가장 작은 값을 삭제할 Node의 Parent Node가 가리키도록 한다.
+## - 삭제할 Node의 오른쪽 자식 선택
+## - 오른쪽 자식의 가장 왼쪽에 있는 Node를 선택
+## - 해당 Node를 삭제할 Node의 Parent Node의 왼쪽 branch가 가리키게 함
+## - 해당 Node의 왼쪽 branch가 삭제할 Node의 왼쪽 Child Node를 가리키게 함
+## - 해당 Node의 오른쪽 branch가 삭제할 Node의 오른쪽 Child Node를 가리키게 함
+## - 만약 해당 Node가 오른쪽 Child Node를 가지고 있었을 경우, 해당 Node의 본래 Parent Node의 왼쪽 branch가 해당 오른쪽 Child Node를 가리키게 함
+
+
+## 2.삭제할 Node의 왼쪽 자식 중 가장 큰 값을 삭제할 Node의 Parent Node가 가리키도록 한다.
+
 # 데이터 입력
 head = Node(1)
 BST = NodeMgmt(head)
@@ -46,6 +61,4 @@ BST.insert(2)
 BST.insert(3)
 BST.insert(0)
 BST.insert(4)
-BST.insert(8)
-
-print(BST.search(-1))
+BST.insert(8) 
