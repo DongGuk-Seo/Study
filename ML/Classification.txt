@@ -22,11 +22,11 @@ Desicion Tree : 조건에 따라 데이터를 분류하는 모델
  - Desicion Tree에서 최적의 Tree는 찾는 것이 NP-complete기에 heuristic한 방식으로 찾음
  -(특별한 제약조건이 없다면) 모든 데이터가 나뉘어 leaf node가 pure한 상태(=지니 계수 0)면 종료
  - 장점 :
-   - white-box(학습 결과가 명확하게 해석 가능)
-   - easy to train
+   1. white-box(학습 결과가 명확하게 해석 가능)
+   2. easy to train
  - 단점 :
-   - easy to overfit
-   - too susceptive(training data가 조금만 바뀌어도 학습 모델이 전혀 다르게 생성)
+   1. easy to overfit
+   2. too susceptive(training data가 조금만 바뀌어도 학습 모델이 전혀 다르게 생성)
 
 Random Forest : Desicion Tree가 모여 더 좋은 결과를 내는 모델
  - CART 모델의 단점을 극복하기 위해 제시된 모델
@@ -34,8 +34,8 @@ Random Forest : Desicion Tree가 모여 더 좋은 결과를 내는 모델
  - Model Ensemble : 단일 모델을 여러개 사용하여 더 나은 판단을 하는 것
  - 주의점 : 같은 데이터의 Desicion Tree는 같은 결과를 도출(다양성이 필요)
  - 전략 :
-   - Bagging(Bootstrap Aggregating) - data sampling(모집단을 변경)
-   - Random Subspace method - feature sampling(Desicion Tree가 사용하는 feature를 변경)
+   1. Bagging(Bootstrap Aggregating) - data sampling(모집단을 변경)
+   2. Random Subspace method - feature sampling(Desicion Tree가 사용하는 feature를 변경)
  - 각 Desicion Tree 학습 시 Bootstrapping과 Random Subspace method를 적용
  - 몇 개의 Desicion Tree를 적용할 지는 hyper-parameter
  - 결과로 만들어진 Desicion Tree의 결론을 다수결로 평가하여 '집단지성'을 구현

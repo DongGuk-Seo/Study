@@ -1,0 +1,56 @@
+클러스터링(Regression) : 주어진 데이터(X) 사이의 유사한 데이터들을 묶어주는 방법
+ - 비슷한 데이터들끼리 같은 그룹, 그렇지 않은 데이터들과는 다른 그룹으로 묶음
+ - 대표적인 unsupervised learning 방식
+ - input data는 일반적으로 벡터(feature vector), target value는 없음
+ - target value가 없어서 feature vector가 굉장히 중요 (feature engineering의 영향을 많이 받음)
+ - 중요 요소 :
+  1. feature vector
+  2. similarity
+
+K-means : 주어진 데이터에서 K개의 중심점을 찾아서 데이터를 묶어주는 방법
+ - K-means는 대표적인 클러스터링 모델 (1960년대에 처음 제안, 현재까지도 많이 사용되는 모델)
+ - 직관적인 모델, 간단하고 빠름
+ - 모델 원리 :
+  1. 주어진 데이터에서 랜덤으로 K개의 데이터를 첫 기준점으로 잡고 각 centroid에 0번부터 차례대로 번호를 부여
+  2. 각 데이터는 K개의 centroid 중 가장 가까운 centroid를 찾아서 같은 번호를 부여
+  3. 같은 번호인 데이터들끼리 평균을 계산
+  4. 각 평균을 새로운 centroid로 지정
+  5. 2번부터 다시 반복
+ - 장점 :
+  1. 매우 빠름
+  2. 모델 수행 원리가 간단하여 해석이 용이 -> unsupervised learning들은 해석이 굉장히 중요(target value가 없기 때문)
+  3. objective function이 convex라서 무조건 수렴(언젠가 정답이 도출)
+ - 단점 :
+  1. mean을 기준으로 하기 때문에 outlier에 굉장히 취약
+  2. 데이터의 모양이 hyper-spherical이 아니면 잘 묶이지 않음(원형으로 분포되어 있지 않으면 잘 묶이지 않음)
+  3. initial centroid를 어떻게 고르냐에 따라 성능이 천지차이(K-means++가 이 문제를 개선)
+  4. K가 hyper-parameter
+
+Hierarchical Agglomerative Clustering(HAC) : 데이터를 유사한 순서대로 묶어서 계층 구조를 만드는 방식으로 데이터를 묶음
+ - HAC는 상향식 계층 클러스터링 (아래에서 위로 데이터를 묶어가는 방식)
+ - Dendrogram으로 표현
+ - Dendrogram에서 x축은 데이터 하나하나를 의미, y축은 유사도(대부분 euclidean distance)를 나타냄
+ - 모든 데이터 간 유사도를 계산해야되서 매우 느림
+ - 모델 원리 :
+  1. 모든 데이터를 각자 독립적인 cluster로 세팅(서로 다른 N개의 cluster label을 부여)
+  2. 유사도(similarity)와 묶는 방식(linkage)을 설정(유사도는 euclidean distance로, 묶는 방식은 single)
+  3. 가장 유사도가 높은 2개의 cluster를 선택
+  4. 정해진 방식으로 묶음(single의 경우 가장 가까운 데이터의 pair가 포함된 두 개의 cluster를 합침)
+  5. 모든 데이터가 묶여서 하나의 cluster가 될 때까지 3,4번을 반복
+  6. Dendrogram에서 특정 threshold(distance)를 기준으로 세로로 잘랐을 때 나뉘는 cluster들을 최종 cluster로 선정
+ - Linkage criteria :
+  1. Single : 가장 가까운 데이터 pair가 포함된 두 개의 cluster를 병합
+  2. Average : cluster 간 평균 거리가 가장 가까운 두 개의 cluster를 병합
+  3. Complete : 임의의 두 개의 cluster 중 가장 멀리있는 데이터 간의 거리가 가장 가까운 두 개의 cluster를 병합(min|max)
+  4. Ward : 모든 cluster의 within cluster variance가 최소가 되는 cluster를 병합 (within cluster variance : cluster 내부 데이터 간 sum-of-squared distance를 의미)
+  
+
+DBSCAN
+
+HDBSCAN
+
+Spectral Clustering
+
+Mean Shift
+
+BIRCH
