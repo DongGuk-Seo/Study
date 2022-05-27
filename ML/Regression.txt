@@ -1,37 +1,37 @@
 Linear Regression :y = Wx + b로 표시되는 선형식으로 x와 y의 관계를 찾는 모델 (전체 데이터의 경향성을 파악하는 선형식을 구하는 방법)
- - 분류와 다르게, 회귀 모델은 계산 결과 자체가 예측 값
- - 특정 값을 예측하는 것을 목표로 설정 (특정 카테고리 예측에는 적합하지 않음)
- - 특정 값을 찾기 위해 주어진 데이터의 패턴을 탐구
- - 패턴을 선형식으로 파악하는 것이 Linear Regression
+ - 특징 :
+  1. 분류와 다르게, 회귀 모델은 계산 결과 자체가 예측 값
+  2. 특정 값을 예측하는 것을 목표로 설정 (특정 카테고리 예측에는 적합하지 않음)
+  3. 특정 값을 찾기 위해 주어진 데이터의 패턴을 탐구
+  4. 패턴을 선형식으로 파악하는 것이 Linear Regression
  - 가장 많이 사용하는 Loss function은 MSE(Mean Squared Error)
-  / 모델의 예측값이 실제값에 점점 가까워지게 학습 -> 전체적으로 Loss의 평균이 작아지는 방향으로 학습
-  / 차이가 큰 데이터가 있는 경우 Loss가 더 크게 나오기 때문에 outlier 데이터가 있으면 미리 제거 또는 보정이 필요
-  / Gradient descent algorithm이 사용되어 w, b를 업데이트
+  1. 모델의 예측값이 실제값에 점점 가까워지게 학습 -> 전체적으로 Loss의 평균이 작아지는 방향으로 학습
+  2. 차이가 큰 데이터가 있는 경우 Loss가 더 크게 나오기 때문에 outlier 데이터가 있으면 미리 제거 또는 보정이 필요
+  3. Gradient descent algorithm이 사용되어 w, b를 업데이트
  - Linear Regression은 파라미터 W와 b를 찾는 문제
  - 장점 :
-  / 통계적으로 설명 가능한 이론이 많다(설명 도구가 많다)
-  / interpretability가 있다(설명 가능하다)
-  / Linear model 자체가 가지는 simplicity 때문에, general한 모델이 나오는 편(복잡한 모델보다 때로 예측력이 더 뛰어남)
+  1. 통계적으로 설명 가능한 이론이 많다(설명 도구가 많다)
+  2. interpretability가 있다(설명 가능하다)
+  3. Linear model 자체가 가지는 simplicity 때문에, general한 모델이 나오는 편(복잡한 모델보다 때로 예측력이 더 뛰어남)
 
 
 Lasso, Ridge : Linear Regression 모델이 고차원 공간에 overfitting이 쉽게 되는 문제를 해결한 기법
  - Simple Linear Regression : y = Wx + b, MSE function
  - Lasso : 
-  / weight의 L1 term을 Loss function에 더해줍니다(ʎ는 hyper-parameter)
-  / Loss가 무조건 증가
-  / 추가한 항(L1 term)도 Gradient descent algorithm의 최적화 대상
-  / L1 term을 제약조건이라 부르고 Regularization term 이라고도 함 (L1 Regularization term)
+  1. weight의 L1 term을 Loss function에 더해줍니다(ʎ는 hyper-parameter)
+  2. Loss가 무조건 증가
+  3. 추가한 항(L1 term)도 Gradient descent algorithm의 최적화 대상
+  4. L1 term을 제약조건이라 부르고 Regularization term 이라고도 함 (L1 Regularization term)
  - Ridge :
-  / weight의 L2 term을 Loss function에 더해줍니다(ʎ는 hyper-parameter)
-  / Loss가 무조건 증가
-  / 추가한 항(L2 term)도 Gradient descent algorithm의 최적화 대상
-  / L2 term을 제약조건이라 부르고 Regularization term 이라고도 함 (L2 Regularization term)
- - Lasso나 Ridge를 적용했을 때, 성능이 향상된다면 Linear Regression 모델에 사용되는 feature vector가 차원을 줄일 필요가 있다는 얘기
-  / feature selection이 성능 향상을 가져옴
+  1. weight의 L2 term을 Loss function에 더해줍니다(ʎ는 hyper-parameter)
+  2. Loss가 무조건 증가
+  3. 추가한 항(L2 term)도 Gradient descent algorithm의 최적화 대상
+  4. L2 term을 제약조건이라 부르고 Regularization term 이라고도 함 (L2 Regularization term)
+ - Lasso나 Ridge를 적용했을 때, 성능이 향상된다면 Linear Regression 모델에 사용되는 feature vector가 차원을 줄일 필요가 있다는 얘기(feature selection이 성능 향상을 가져옴)
  - Regularization을 할 때, weight를 사용하는 방식을 weight decay라고 함
  - weight decay를 주게 되면, Gradient descent algorithm이 loss space를 탐색할 때 제약 조건을 받게되는 효과가 있음
  - 제약 조건 때문에, 특정 weight들이 사라지는 효과가 생기면서(0에 가까워짐) feature subset selection을 하는 효과가 있음
- 
+
 XGBoost
 
 LightGBM

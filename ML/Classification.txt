@@ -1,26 +1,30 @@
 Linear Classifier : y = Wx + b로 표시되는 선형 함수로 데이터를 분류하는 모델
- - Linear Classifier는 하나의 선형식으로 데이터를 나누는 방법
- - 하나의 선형식으로 범위가 분할이 되어 한 쪽은 1 나머지는 0으로 가정했을때 두 가지의 케이스로 데이터를 분류
- - Linear Classifier 학습 -> 데이터를 잘 나누는 적절한 파라미터 W와 b를 찾는 것
- - 경계면을 decision boundary(Linear Classifier)라고 함
+ - 특징:
+  1. Linear Classifier는 하나의 선형식으로 데이터를 나누는 방법
+  2. 하나의 선형식으로 범위가 분할이 되어 한 쪽은 1 나머지는 0으로 가정했을때 두 가지의 케이스로 데이터를 분류
+  3. Linear Classifier 학습 -> 데이터를 잘 나누는 적절한 파라미터 W와 b를 찾는 것
+  4. 경계면을 decision boundary(Linear Classifier)라고 함
 
 Logistic Regression : 주어진 데이터(X)를 통해서 사건의 발생 확률(y)를 예측하는 통계 모델
- - 대표적인 이진 분류 모델
- - Linear Regression을 분류 모델로 확장한 모델
- - 특정 카테고리를 예측하는데 적합
- - Linear Regression 결과에 적절한 함수를 적용하여 output score를 0~1 사이의 값으로 변환하여 카테고리가 나올 확률을 예측
- - logit function : Ø(z) = 1/1 + e^(-z) # 무한대의 범위를 가지는 z를 [0,1]로 변환(z는 Linear Regression의 결과값)
- - P(Y = 1|x) = 1/1 + e^-(W^Tx+b) # Linear Regression의 결과를 확장한 수식
- - 업데이트 되는 파라미터는 W와 b
+ - 특징 :
+  1. 대표적인 이진 분류 모델
+  2. Linear Regression을 분류 모델로 확장한 모델
+  3. 특정 카테고리를 예측하는데 적합
+ - 모델 원리 :
+  1. Linear Regression 결과에 적절한 함수를 적용하여 output score를 0~1 사이의 값으로 변환하여 카테고리가 나올 확률을 예측
+  2. logit function : Ø(z) = 1/1 + e^(-z) # 무한대의 범위를 가지는 z를 [0,1]로 변환(z는 Linear Regression의 결과값)
+  3. P(Y = 1|x) = 1/1 + e^-(W^Tx+b) # Linear Regression의 결과를 확장한 수식
+  4. 업데이트 되는 파라미터는 W와 b
 
 Desicion Tree : 조건에 따라 데이터를 분류하는 모델
- - 대표적인 non-parametric 모델, white-box 모델 (explainable, interpretable)
- - Desicion Tree는 CART(Classification And Regression Tree) - 분류/회귀 가능
- - sklearn에 구현되어 있는 모델
- - 노드마다 feature 하나를 선택하여 최적의 기준으로 나눌 수 있게 기준을 정함
- - 최적이 되는 기준 -> 지니 계수(Gini Criterion) - 불순도를 의미
- - Desicion Tree에서 최적의 Tree는 찾는 것이 NP-complete기에 heuristic한 방식으로 찾음
- -(특별한 제약조건이 없다면) 모든 데이터가 나뉘어 leaf node가 pure한 상태(=지니 계수 0)면 종료
+ - 특징 :
+  1. 대표적인 non-parametric 모델, white-box 모델 (explainable, interpretable)
+  2. Desicion Tree는 CART(Classification And Regression Tree) - 분류/회귀 가능
+  3. sklearn에 구현되어 있는 모델
+  4. 노드마다 feature 하나를 선택하여 최적의 기준으로 나눌 수 있게 기준을 정함
+  5. 최적이 되는 기준 -> 지니 계수(Gini Criterion) - 불순도를 의미
+  6. Desicion Tree에서 최적의 Tree는 찾는 것이 NP-complete기에 heuristic한 방식으로 찾음
+    (특별한 제약조건이 없다면) 모든 데이터가 나뉘어 leaf node가 pure한 상태(=지니 계수 0)면 종료
  - 장점 :
    1. white-box(학습 결과가 명확하게 해석 가능)
    2. easy to train
@@ -29,15 +33,16 @@ Desicion Tree : 조건에 따라 데이터를 분류하는 모델
    2. too susceptive(training data가 조금만 바뀌어도 학습 모델이 전혀 다르게 생성)
 
 Random Forest : Desicion Tree가 모여 더 좋은 결과를 내는 모델
- - CART 모델의 단점을 극복하기 위해 제시된 모델
- - Desicion Tree의 단점을 Desicion Tree를 여러개 사용하여 보완하자는 아이디어
- - Model Ensemble : 단일 모델을 여러개 사용하여 더 나은 판단을 하는 것
+ - 특징 :
+  1. CART 모델의 단점을 극복하기 위해 제시된 모델
+  2. Desicion Tree의 단점을 Desicion Tree를 여러개 사용하여 보완하자는 아이디어
+  3. Model Ensemble : 단일 모델을 여러개 사용하여 더 나은 판단을 하는 것
  - 주의점 : 같은 데이터의 Desicion Tree는 같은 결과를 도출(다양성이 필요)
  - 전략 :
    1. Bagging(Bootstrap Aggregating) - data sampling(모집단을 변경)
    2. Random Subspace method - feature sampling(Desicion Tree가 사용하는 feature를 변경)
  - 각 Desicion Tree 학습 시 Bootstrapping과 Random Subspace method를 적용
- - 몇 개의 Desicion Tree를 적용할 지는 hyper-parameter
+ - 몇 개의 Desicion Tree를 적용할 지 -> hyper-parameter
  - 결과로 만들어진 Desicion Tree의 결론을 다수결로 평가하여 '집단지성'을 구현
  - Random Forest는 그냥 Desicion Tree를 모으는게 아닌, randomness를 적당히 포함하여 약점을 보완한 모델
  - 정형 데이터를 머신러닝으로 수행할 때 굉장히 좋은 baseline model로 사용
