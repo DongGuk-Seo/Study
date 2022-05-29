@@ -74,10 +74,19 @@ DBSCAN(Density-Based Spatial Clustering of Applications with Noise) : 정의한 
   2. 모든 포인트에 Range query를 계산해야 되서 꽤 느린 편 - O(N^2)
   3. 고차원 공간에서 성능이 떨어짐(Curse of dimensionality)
   
-HDBSCAN
-
-Spectral Clustering
-
-Mean Shift
-
-BIRCH
+Spectral Clustering : KNN Graph를 생성하여 데이터의 특징을 잘 파악한 뒤 성능이 좋은 클러스터를 생성해주는 방법
+ - 정리 :
+  1. 데이터 간의 관계를 모델링할 때 사용하는 자료구조를 Graph라고 함
+  2. Node(Vertices)와 Edge(Links)로 구성
+  3. Social Network나 Molecular Structure가 대표적인 Graph를 활용하여 해석할 수 있는 도메인
+ - 특징 :
+  1. 대표적인 Graph Clustering 기법(묶이는 대상이 subgraph)
+  2. 주어진 데이터를 그래프 모델로 해석 후 subgraph로 데이터를 나누는 것으로 묶어주는 방식
+  3. 위와 같은 데이터를 나누는 과정이 Graph Laplacian Matrix의 Eigenvector를 찾는 것과 같은 과정이 되기 때문에, Spectral이라는 단어가 붙음
+  4. 각 데이터를 노드로 두고, 각 데이터로부터 ɛ(epsilon)보다 가까운 거리에 있는 노드들을 연결한 KNN Graph를 만듦
+  5. 만든 그래프가 가장 잘 나눠지는 곳을 찾아서 그래프를 2분할(find min-cut)
+  6. 원하는 개수의 cluster가 생길 때 까지 그래프를 분할(cluster-1 만큼 분할)
+ - 장점 :
+  1. 기존 공간에 구애받지 않고 데이터를 그래프 구조로 파악하는 것으로 성능이 꽤 좋게 나옴
+ - 단점 :
+  1. KNN Graph를 만들고 min-cut을 찾는게 시간이 오래 걸림 - O(N^3)
