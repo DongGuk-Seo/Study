@@ -1,0 +1,74 @@
+- 비모수적 기법 : 모집단의 확률 분포에 대한 특별한 가정없이, 평균과 분산이라는 지표를 추정하는 것
+- 모수적 기법 : 모집단의 성질에 따라 어떤 확률 분포의 형태인지를 미리 가정한 후, 기댓값 혹은 분산을 결정하는 소수의 파라미터를 추정하는 것
+
+ 이산확률 분포의 예 : 베르누이 분포, 이항 분호, 기하 분포, 푸아송 분포 등
+
+1. 베르누이 분포 : 
+ - 가장 기본적인 이산형 확률 분포
+ - 취할 수 있는 값은 0 또는 1
+ - 확률을 p와 1-p로 정의
+ - Bern(p)로 표기
+ - 확률함수 공식
+ - 공식 :
+
+ def Bern(p):
+    x_set = np.array([0,1])
+    def f(x):
+        if x in x_set:
+            return p ** x * (1-p) ** (1-x)
+        else:
+        return 0
+    return x_set, f
+ - Scipy.stats의 Bernoulli 함수를 활용해서 구현/계산 가능
+
+2. 이항 분포
+ - 성공 확률이 p인 베르누이 시행을 n번 했을 때의 성공 횟수를 나타내는 분포
+ - 취할 수 있는 값 : {0,1,2,~,n}
+ - 파라미터 : 성공 확률 p, 시행 횟수 ,
+ - 0 <= p <= 1, n은 1 이상의 정수
+ - Bin(n,p)로 표기
+ - 공식 :
+
+from scipy.special import comb
+ def Bin(n,p):
+     x_set = np.arange(n+1)
+    def f(x):
+        if x in x_set:
+            return comb(n,x) * p**x * (1-p)**(n-x)
+        else:
+            return 0
+    return x_set, f
+
+3. 기하 분포
+ - 베르누이 시행에서 처음 성공할 때까지 반복한 시행 횟수에 따른 분포
+ - 취할 수 있는 값 : {0,1,2,~}
+ - 파라미터 : 성공 확률 p
+ - 0 <= p <= 1
+ - Ge(p)로 표기
+ - 공식 : 
+
+def Ge (p):
+    x_set = np.arange(1, 30)
+    def f(x):
+        if x in x_set:
+            return p * (1-p) ** (x-1)
+        else:
+            return 0
+    return x_set, f
+
+4. 푸아송 분포
+ - 임의의 사건이 단위 시간당 발생하는 건수에 따른 확률분포
+ - 취할 수 있는 값 : {0,1,2,3,~}
+ - 파라미터 : ለ(lambda)는 양의 실수
+ - Poi(ለ)로 표기
+ - 공식 : 
+
+ from scipy.special import factorial
+ def Poi (lam):
+    x_set = np.arange(20)
+    def f(x):
+        if x in x_set:
+            return np.power(lam, x) / factorial(x) * np.exp(-lam)
+        else:
+            return 0
+    return x_set, f
