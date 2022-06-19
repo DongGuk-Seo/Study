@@ -1,0 +1,18 @@
+Deep Learning : ML + Deep Neural Network
+ - 보통 ML보다 성능이 좋음(feature extraction 때문에)
+ - feature engineering을 DL의 model이 진행
+ - 주의할 점 :
+  1. DL은 ML보다 대용량의 학습데이터를 필요로 함
+  2. ML보다 더 많은 computing resource(GPU/TPU)를 필요로 함
+ - 이미지/텍스트/음성 데이터 분석의 경우 DL이 가장 적합
+
+Perceptron :
+ - 뉴런 정보 전달 절차 : 수상돌기(입력) -> 신경세포체(처리) -> 축삭돌기(출력)
+ - AI's Neuron : X(입력/n차원 vector), w(가중치), b(편차) -> f(activation function : 함수/처리) -> y(출력)
+  -> y = f(w1x1 + w2x2 + w3x3 + b) / f : step function
+
+Multi Layer Perceptron(MLP) :
+ - 다중 Perceptron을 각각 연결하여 input layer/hidden layer/output layer로 구분
+ - non-linear classifier
+ - activation function -> sigmoid function을 사용 : 1/1+e^(-z)
+ 
