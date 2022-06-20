@@ -14,7 +14,6 @@ Linear Regression :y = Wx + b로 표시되는 선형식으로 x와 y의 관계�
   2. interpretability가 있다(설명 가능하다)
   3. Linear model 자체가 가지는 simplicity 때문에, general한 모델이 나오는 편(복잡한 모델보다 때로 예측력이 더 뛰어남)
 
-
 Lasso, Ridge : Linear Regression 모델이 고차원 공간에 overfitting이 쉽게 되는 문제를 해결한 기법
  - Simple Linear Regression : y = Wx + b, MSE function
  - Lasso : 
