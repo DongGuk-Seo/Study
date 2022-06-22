@@ -1,0 +1,12 @@
+로그 함수 : y = log x
+
+지수와 로그의 관계 : y = e^x, log y = x
+
+ 로그 기본 법칙 :
+ 1. log 1 = 0
+ 2. log 0 = -⚯
+
+로그 연산 법칙 :
+ 1. log a + log b = log ab
+ 2. log a - log b = log a/b
+ 3. log a^b = b log a

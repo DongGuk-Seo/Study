@@ -1,10 +1,23 @@
 Deep Learning : ML + Deep Neural Network
- - 보통 ML보다 성능이 좋음(feature extraction 때문에)
- - feature engineering을 DL의 model이 진행
- - 주의할 점 :
-  1. DL은 ML보다 대용량의 학습데이터를 필요로 함
-  2. ML보다 더 많은 computing resource(GPU/TPU)를 필요로 함
- - 이미지/텍스트/음성 데이터 분석의 경우 DL이 가장 적합
+ - 정의 : Deep Neural Network를 학습시켜 문제를 해결하는 것
+ - 특징 : 
+  1. 보통 ML보다 성능이 좋음(feature extraction 때문에)
+  2. feature engineering을 DL의 model이 진행 (raw 데이터 입력 시 기계가 특징을 파악)
+  3. 기존 신경망에 비해 더 깊은 구조
+  4. 이미지/텍스트/음성 데이터 분석의 경우 DL이 가장 적합 (비선형 함수로 패턴 인식 능력이 월등)
+  5. DL은 ML보다 대용량의 학습데이터를 필요로 함
+  6. ML보다 더 많은 computing resource(GPU/TPU)를 필요로 함
+ - 발달 과정 :
+  1. 인터넷 발달 -> 빅데이터 -> 깊은 신경망
+  2. GPU 활용 병렬연산의 대중화 -> 신경망의 학습/추론 속도의 비약적 증가
+ - 목적 : 주어진 데이터에 대해서 결과를 내는 가상의 함수를 모사하는 함수를 만드는 것
+ - 절차 :
+  1. 문제 정의 : 문제를 단계별로 나누고 간략화(신경망이라는 함수에 대입할 x, y의 정의)
+  2. 데이터 수집 : NLP/CV - crawling / 필요에 따라 labeling 작업 수행
+  3. 데이터 전처리 및 분석 : 수집된 데이터를 신경망에 대입하기 적합한 형태로 가공 (EDA가 필요 - NLP/CV에서 생략되기도 함) / 영상처리에서는 데이터 증강이 수행
+  4. 알고리즘 적용 : 데이터의 가설 수립 및 적용
+  5. 평가 :  테스트 셋 구성(정량적/정성적 평가로 나뉨) -> 문제 정의에 따른 올바른 평가 실시
+  6. 배포 : 학습과 평가가 완료된 모델 weights 파일 배포(RESTful API)등을 통해 wrapping 후 배포(데이터 분포 변화에 따른 유지/보수까지)
 
 Perceptron :
  - 뉴런 정보 전달 절차 : 수상돌기(입력) -> 신경세포체(처리) -> 축삭돌기(출력)
@@ -15,4 +28,3 @@ Multi Layer Perceptron(MLP) :
  - 다중 Perceptron을 각각 연결하여 input layer/hidden layer/output layer로 구분
  - non-linear classifier
  - activation function -> sigmoid function을 사용 : 1/1+e^(-z)
- 
