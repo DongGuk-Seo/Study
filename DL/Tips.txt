@@ -1,0 +1,7 @@
+Tips
+1. 실험은 Baseline 구축부터 시작
+2. Hyper-parameter 별 결과물 관리
+ - 수 많은 튜닝 결과의 관리 : 각 Hyper-parameter별 성능(accuracy,loss 등), 실험마다 나오는 모델(weight) 파일
+  -> 가장 간단한 방법은 모델 파일 이름에 저장(ex. model.n_layers-10.n_epochs-100.act-leaky_relu.loss-xxx.accuracy-xx.pth) - 결국 Table로 정리 필요
+ - 실험 관리를 도와주는 프레임워크 : MLFlow, WanDB(부분 유료) 등
+3. Batch-size는 2의 제곱 수로 하면 연산 속도가 올라감(2의 제곱 수 + 2의 제곱 수도 가능)
