@@ -5,3 +5,4 @@ Tips
   -> 가장 간단한 방법은 모델 파일 이름에 저장(ex. model.n_layers-10.n_epochs-100.act-leaky_relu.loss-xxx.accuracy-xx.pth) - 결국 Table로 정리 필요
  - 실험 관리를 도와주는 프레임워크 : MLFlow, WanDB(부분 유료) 등
 3. Batch-size는 2의 제곱 수로 하면 연산 속도가 올라감(2의 제곱 수 + 2의 제곱 수도 가능)
+4. Preproccessing 중 Scaling은 Train data set에만 적용
