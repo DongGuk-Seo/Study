@@ -14,6 +14,16 @@ Deep Learning : ML + Deep Neural Network
   4. 이미지/텍스트/음성 데이터 분석의 경우 DL이 가장 적합 (비선형 함수로 패턴 인식 능력이 월등)
   5. DL은 ML보다 대용량의 학습데이터를 필요로 함
   6. ML보다 더 많은 computing resource(GPU/TPU)를 필요로 함
+  7. 비선형 데이터의 관계 또는 함수에 대해서 근사 가능
+   - 신경망의 깊이, 너비에 따라 capacity가 결정
+   - 더 깊고 넓은 네트워크를 통해 더복잡한 함수를 근사할 수 있음
+   - 파라미터가 늘어남에 따라 최적화가 어려움
+   - linear regression 과 같은 방법(Gradient descent)를 통해 최적화(DNN은 non-convex한 loss surface)
+  8. 편미분의 chain-rule을 통해, 합성함수의 미분을 나누어 접근
+  9. Backpropagation - Gradient Vanishing
+   - sigmoid, TanH는 기울기가 항상 1보다 작거나 같음
+   - backdrop 과정 반복 시 기울기 값이 점점 감소
+   - ReLU(또는 LeakyReLU) 활용하여 어느정도 해결 가능
  - 발달 과정 :
   1. 인터넷 발달 -> 빅데이터 -> 깊은 신경망
   2. GPU 활용 병렬연산의 대중화 -> 신경망의 학습/추론 속도의 비약적 증가
@@ -44,19 +54,6 @@ Multi Layer Perceptron(MLP) :
  - 다중 Perceptron을 각각 연결하여 input layer/hidden layer/output layer로 구분
  - non-linear classifier
  - activation function -> sigmoid function을 사용 : 1/1+e^(-z)
-
-DNN:
- - 특징 :
-  1. 비선형 데이터의 관계 또는 함수에 대해서 근사 가능
-   - 신경망의 깊이, 너비에 따라 capacity가 결정
-   - 더 깊고 넓은 네트워크를 통해 더복잡한 함수를 근사할 수 있음
-   - 파라미터가 늘어남에 따라 최적화가 어려움
-   - linear regression 과 같은 방법(Gradient descent)를 통해 최적화(DNN은 non-convex한 loss surface)
-  2. 편미분의 chain-rule을 통해, 합성함수의 미분을 나누어 접근
-  3. Backpropagation - Gradient Vanishing
-   - sigmoid, TanH는 기울기가 항상 1보다 작거나 같음
-   - backdrop 과정 반복 시 기울기 값이 점점 감소
-   - ReLU(또는 LeakyReLU) 활용하여 어느정도 해결 가능
 
 Binary Classification with DNN
  - Deep regression과 마찬가지로 모델을 DNN으로 교체 후, sigmoid를 마지막에 적용(Gradient descent 방식으로 최적화 가능)
