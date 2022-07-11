@@ -6,3 +6,12 @@ Tips
  - 실험 관리를 도와주는 프레임워크 : MLFlow, WanDB(부분 유료) 등
 3. Batch-size는 2의 제곱 수로 하면 연산 속도가 올라감(2의 제곱 수 + 2의 제곱 수도 가능)
 4. Preproccessing 중 Scaling은 Train data set에만 적용
+
+
+Focus on
+1. 실무에서는 Jupyter Notebook을 사용 X -> Python Script의 CLI 환경을 이용
+ - model.py : Architecture 정의 클래스
+ - trainer.py: Model 학습을 위한 코드
+ - datalodader.py : 데이터 불러와 전처리 수행 및 신경망에 넣기 좋은 형태로 변환
+ - train.py : 사용자로부터 Hyper-parameter를 받아, Model, Trainer 및 Loader를 선언하고 학습
+ - predict.py : 사용자로부터 Model과 input을 받아 추론을 수행
