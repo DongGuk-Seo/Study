@@ -62,3 +62,4 @@ Binary Classification with DNN
 Maximum Likelihood Estimation(MLE)
  - Likelihood function : 입력으로 주어진 확률 분포(파라미터)가 데이터를 얼마나 잘 설명하는지 나타내는 점수(Likelihood)를 출력하는 함수
  - 데이터를 잘 설명하는 지 알 수 있는 방법 (데이터가 해당 확률 분포에서 높은 확률 값을 가질 것)
+ - Gradient Ascent를 통해 최적의 파라미터를 구할 수 있음 (대부분의 DL의 프레임워크는 Gradient Descent만 지원)

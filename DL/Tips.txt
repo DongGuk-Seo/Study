@@ -6,6 +6,9 @@ Tips
  - 실험 관리를 도와주는 프레임워크 : MLFlow, WanDB(부분 유료) 등
 3. Batch-size는 2의 제곱 수로 하면 연산 속도가 올라감(2의 제곱 수 + 2의 제곱 수도 가능)
 4. Preproccessing 중 Scaling은 Train data set에만 적용
+5. Distribution's parameter :
+ - Bernoulli : ʘ = {p} (확률)
+ - Gaussian : ʘ = {ų,ó} (확률과 분포)
 
 
 Focus on
