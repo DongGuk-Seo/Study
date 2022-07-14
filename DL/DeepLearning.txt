@@ -30,20 +30,20 @@ Deep Learning : ML + Deep Neural Network
  - 목적 : 주어진 데이터에 대해서 결과를 내는 가상의 함수를 모사하는 함수를 만드는 것
  - 진행 절차 :
   Training(Start Epoch) : 
-  1. To start iteration
-  2. Feed-forward
-  3. Loss Calculation
-  4. Back-propagation
-  5. Processing Gradient descent
-  6. Printing current state
-  7. To exit iteration
+    1. To start iteration
+    2. Feed-forward
+    3. Loss Calculation
+    4. Back-propagation
+    5. Processing Gradient descent
+    6. Printing current state
+    7. To exit iteration
   Validation :
-  1. To start iteration
-  2. Feed-forward
-  3. Loss Calculation 
-  4. Printing current state
-  5. To exit iteration
-  (Checking best loss -> Saving modeling- > Stop Epoch ->  Start epoch - Training)
+    1. To start iteration
+    2. Feed-forward
+    3. Loss Calculation 
+    4. Printing current state
+    5. To exit iteration
+    (Checking best loss -> Saving modeling- > Stop Epoch ->  Start epoch - Training)
 
 Perceptron :
  - 뉴런 정보 전달 절차 : 수상돌기(입력) -> 신경세포체(처리) -> 축삭돌기(출력)
@@ -63,3 +63,10 @@ Maximum Likelihood Estimation(MLE)
  - Likelihood function : 입력으로 주어진 확률 분포(파라미터)가 데이터를 얼마나 잘 설명하는지 나타내는 점수(Likelihood)를 출력하는 함수
  - 데이터를 잘 설명하는 지 알 수 있는 방법 (데이터가 해당 확률 분포에서 높은 확률 값을 가질 것)
  - Gradient Ascent를 통해 최적의 파라미터를 구할 수 있음 (대부분의 DL의 프레임워크는 Gradient Descent만 지원)
+
+Boilerplate
+ - 정의 : 
+  1. 학습 scheme이 비슷할 경우, 모델과 dataset을 제외한 코드는 거의 동일
+   -> 모델을 코딩하는 시간보다 부수적인 요소 코딩에 더 많은 시간 소요
+  2. 모델과 dataset만 갈아끼워 재사용 가능한 코드가 있으면 좋을 것
+   -> 템플릿(Boilerplate)을 만들어 재 사용성을 높임
