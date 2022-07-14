@@ -9,6 +9,11 @@ Tips
 5. Distribution's parameter :
  - Bernoulli : ʘ = {p} (확률)
  - Gaussian : ʘ = {ų,ó} (확률과 분포)
+6. RNN 에서의 접근 방법
+ - Non-autoregressive(Non-generative) : Bi-directional RNN 사용 권장
+  -> 현재 상태가 앞/뒤 상태를 통해 정해지는 경우
+ - Autoregressive(Generative) : One-to-Many case에 해당하며 Bi-directional RNN 사용 불가
+  -> 현재 상태가 과거 상태에 의존하여 정해지는 경우
 
 
 Focus on

@@ -1,0 +1,19 @@
+Sequential Data/Time Series : Time-stamp 유무에 따른 차이
+ - ex:
+  1. Time Series : 주식 데이터, 센서 데이터
+  2. Sequential Data : 텍스트, 영상/음성(샘플링 주기가 일정)
+
+Recurrent Neural Networks :
+ 1. Single-layer RNN
+  - hidden state는 곧 output
+ 2. Multi-layered RNN
+  - Output은 마지막 layer의 모든 time-step의 hidden state
+  - Hidden state는 마지막 time-step의 모든 layer의 hidden state
+ 3. Bi-directional RNN
+  - Output은 hidden state가 2배가 됨
+  - Hidden state는 layer의 갯수가 2배가 됨
+
+RNN's Applications :
+ 1. Many to One : Text Classification
+ 2. One to Many : NLG, Machine Translation
+ 3. Many to Many : POS Tagging, MRC
