@@ -14,7 +14,7 @@ Tips
   -> 현재 상태가 앞/뒤 상태를 통해 정해지는 경우
  - Autoregressive(Generative) : One-to-Many case에 해당하며 Bi-directional RNN 사용 불가
   -> 현재 상태가 과거 상태에 의존하여 정해지는 경우
-
+7. batch_first를 잘 확인(교육용 코드는 batch_first = True)
 
 Focus on
 1. 실무에서는 Jupyter Notebook을 사용 X -> Python Script의 CLI 환경을 이용

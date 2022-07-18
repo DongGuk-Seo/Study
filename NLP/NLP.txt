@@ -134,3 +134,12 @@ Parallel Corpus :
   3. 각 언어별 Corpus에 대해서 word embedding 수행 (FastText 활용)
   4. Muse를 활용하여 word translation dictionary 추출
   5. Champollion을 활용하여 align 수행
+
+Mini-batch : 
+ - 절차 :
+  1. Corpus의 각 문장들을 길이에 따라 정렬
+  2. 각 token들을 사전을 활용하여 str -> index 맵핑
+  3. mini-batch 크기대로 chunking
+  4. 각 mini-batch별 tensor 구성 및 padding
+  5. 학습 시 mini-batch를 shuffling 하여 iterative하게 반환
+  
