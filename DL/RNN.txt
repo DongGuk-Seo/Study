@@ -17,3 +17,5 @@ RNN's Applications :
  1. Many to One : Text Classification
  2. One to Many : NLG, Machine Translation
  3. Many to Many : POS Tagging, MRC
+
+ LSTM/GRU

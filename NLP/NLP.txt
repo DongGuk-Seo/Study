@@ -1,0 +1,136 @@
+NLP :
+ 1. Discrete value (단어, 문장)을 다룸
+ 2. 분류 문제로 접근할 수 있음
+ 3. 샘플의 확률 값을 구할 수 있음
+ 4. 문장 생성 (자연어 생성)
+  - auto-regressive 속성을 지님
+  - GAN 적용 불가
+ 5. 절차 :
+  - 데이터 수집 : 구입, 외주, 크롤링
+  - 정제 : Task에 따른 Noise 제거/인코딩 변환
+  - Labeling(Optional) : 문장/단어 별 Labeling
+  - Tokenization : 형태소 분석기를 활용한 분절
+  - Subword Segmentation(Optional) : 단어보다 더 작은 의미 단위 추가 분절
+  - Batchify : 사전 생성 및 word2index 맵핑 수행 및 효율화를 위한 전/후처리
+ 6. 서비스 파이프라인 :
+  - 정제
+  - Tokenization
+  - Subword Segmentation
+  - Batchify
+  - Prediction : 모델에 적용 후 추론/필요에 따라 search 수행(자연어 생성)
+  - Detokenization(Optional) : 사람이 읽을 수 있는 형태로 변환(index2word)/분절 복원
+
+Required :
+ 1. Domain Knowledge (언어적 지식)
+ 2. Nasty Preprocessing (Task에 따른 정제 과정 필요) 
+
+Corpus(말뭉치) : 자연어 처리를 위한 문장들로 구성된 데이터 셋
+ - 복수 표현 : Corpora
+ - 종류 :
+  1. Monolingual Corpus
+  2. Bi-lingual Corpus
+  3. Multilingual Corpus
+  4. Parallel Corpus : 대응되는 문장 쌍이 Labeling 되어 있는 형태
+ - 정제 과정 :
+  1. 기계적인 Noise 제거(전각문자 변환/Task에 따른 전형적인 Noise 제거)
+  2. Interactive Noise 제거 (코퍼스 특성에 따른 Noise 제거)
+ - 정제 시 주의할 점 :
+  1. Task에 따른 특성 (풀고자 하는 문제의 특성에 따라 전처리 전략이 다름/신중한 접근 필요 - ex/이모티콘의 제거 필요성에 대한 판단)
+  2. 언어, 도메인, 코퍼스에 따른 특성(각 언어, 도메인, 코퍼스 별 특성이 다르므로 다른 형태의 전처리 전략이 필요)
+  3. 반각 문자 표기가 가능한 전각 문자의 경우, 반각 문자로 치환(그 외는 제거)
+  4. 대소문자 통일(Optional)
+
+RegEx :
+ - Text editor :
+  1. Sublime Text 3
+  2. Vscode
+  3. EmEditor(유료/다양한 인코딩 지원/대용량 Corpus 로딩 가능)
+ - Type:
+  1. '[word]' : Any word of 'word'
+  2. '^' : not
+  3. '(x)abc(yz)' : poping 'x' + 'yz'
+  4. 'x|y' : 'x' or 'y'
+  5. '?' : Anything, one of a text
+  6. '+' : Anything, a number of texts(one or many)
+  7. '*' : OR / Repeat(ex/ 'ab*' -> 'abababab')
+  8. '{n}','{n,}','{n,m}' : Repeat 'n' times/ over 'n' times/ 'n' times to 'm' times
+  9. '.' : Any character
+  10. '^$' : start/end point of sentence and
+  11. '\s' : blank space
+  12. '\S' : Excepting blank space
+  13. '\w' : alphabet + numeric + '_' (same : [A-Za-z0-9])
+  14. '\W' : not alphabet + numeric + '_' (same : [^A-Za-z0-9])
+  15. '\d' : number (same : [0-9])
+  16. '\D' : not number (same : [^0-9])
+
+Labeling : 
+ - 종류 :
+  1. Text Classification (Input : sentence / Output : class)
+  2. Token Classification (Input : sentence / Output : tag for each token -> sequence)
+  3. Sequence to Sequence (Input : sentence / Output : sentence)
+ - Tips :
+  1. Human Labeling은 prototyping 시, 매우 강력한 도구
+  2. 효율적인 Labeling 도구를 구성(ex/액셀)
+
+Tokenization : 
+ - 종류 :
+  1. Sentence Segmentation : 1 sentence/line으로 치환
+   * NLTK를 활용하여 변환 가능 (from nltk.tokenize import sent_tokenize)
+   * 마침표를 단순히 문장의 끝으로 처리하면 안됨
+  2. Tokenization
+   * 두 개 이상의 다른 token들의 결합으로 이루어진 단어를 쪼개어, vocabulary 숫자를 줄이고, 희소성을 낮추기 위함
+ - 언어별 특징 :
+  1. 영어 : 띄어쓰기가 잘 되어 있음 -> NLTK를 사용하여 comma 등의 후처리
+  2. 중국어 : 기본적인 띄어쓰기가 없고 character 단위로 사용해도 무방
+  3. 일본어 : 기본적인 띄어쓰기가 없음
+ - 형태소 분석 : 형태소를 비롯하여, 어근, 접두(미)사, 품사 등 다양한 언어적 속성의 구조를 파악하는 것
+ - 품사 태깅 : 형태소의 뜻과 문맥을 고려하여 그것에 마크업을 하는 일
+ - 프로그램 :
+  1. 한국어
+   * Mecab (C++/일본어 Mecab을 wrapping, 속도가 가장 빠름)
+   * KoNLPy (복합/설치와 사용이 편리하나 일부 tagger의 경우 속도가 느림)
+  2. 일본어
+   * Mecab
+  3. 중국어
+   * Stanford Parser (Java/스탠포드 개발)
+   * PKU Parser (Java/북경대 개발)
+   * Jieba (Python/가장 최근에 개발, Python으로 제작되어 시스템 구성에 용이)
+ - 한국어의 Tokenization
+  1. 접사를 분리하여 희소성을 낮춤
+  2. 띄어쓰기를 통일하기 위해 Tokenization을 수행
+ - 토큰 평균 길이에 따른 특징
+  1. 짧을 수록
+   * vocabulary 크기 감소 (희소성 문제 감소)
+   * Oov가 줄어듦 (Out of vocabulary)
+   * Sequence의 길이가 길어짐 (모델의 부담 증가)
+   * 극단적 형태 : character 단위
+  2. 길 수록
+   * vocabulary 크기 증가 (희소성 문제 증대)
+   * Oov가 늘어남
+   * Sequence의 길이가 짧아짐 (모델의 부담 감소)
+
+Byte Pair Encoding(BPE) : 압축 알고리즘을 활용하여 subword segmentation을 적용
+ - 학습 코퍼스를 활용하여 BPE 모델을 학습 후, 학습/테스트 코퍼스에 적용
+ - 장점 :
+  1. 희소성을 통계에 기반하여 효과적으로 낮출 수 있다
+  2. 언어별 특성에 대한 정보 없이, 더 작은 의미 단위로 분절할 수 있다
+  3. Oov를 없앨 수 있다 (seen character로만 구성될 경우)
+ - 단점 :
+  1. 학습 데이터 별로 BPE 모델도 생성
+ - Training :
+  1. 단어 사전 생성 (빈도 포함)
+  2. character 단위로 분절 후, pair 별 빈도 카운트
+  3. 최빈도 pair를 골라, merge 수행
+  4. pair 별 빈도 카운트 업데이트
+  5. 3번 과정으로 이동하여 반복
+ - Applying :
+  1. 각 단어를 character 단위로 분절
+  2. 단어 내에서 학습 과정에서 merge에 활용된 pair의 순서대로 merge 수행
+
+Parallel Corpus :
+ - 절차 :
+  1. Bi-lingual Corpus 정제 (Noise 제거)
+  2. Tokenization 수행 (No subword Segmentation)
+  3. 각 언어별 Corpus에 대해서 word embedding 수행 (FastText 활용)
+  4. Muse를 활용하여 word translation dictionary 추출
+  5. Champollion을 활용하여 align 수행
