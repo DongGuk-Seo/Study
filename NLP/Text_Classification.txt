@@ -1,0 +1,10 @@
+Purpose : 텍스트를 입력 받아 원하는 항목에 대한 수치를 출력하는 것
+ - Input : 문장 / Output : 클래스
+
+Feed-forward 과정
+ 1. One-hot vector를 입력으로 받아 embedding layer에 넣어준다
+ 2. Embedding vector를 RNN에 넣어 출력을 얻는다
+ 3. RNN의 출력값 중 마지막 time-step의 값을 잘라낸다
+ 4. 잘라낸 값을 softmax layer에 통과시켜 각 클래스별 확률값을 얻는다
+
+Architecture : Embedding -> LSTM -> Linear Layer -> Softmax
