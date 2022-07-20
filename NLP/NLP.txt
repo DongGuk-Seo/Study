@@ -5,7 +5,7 @@ NLP :
  4. 문장 생성 (자연어 생성)
   - auto-regressive 속성을 지님
   - GAN 적용 불가
- 5. 절차 :
+ 5. Preprocessing 절차 :
   - 데이터 수집 : 구입, 외주, 크롤링
   - 정제 : Task에 따른 Noise 제거/인코딩 변환
   - Labeling(Optional) : 문장/단어 별 Labeling
@@ -163,3 +163,23 @@ Word-Embedding :
    * 최종적으로 각 subword에 대한 embedding vector의 합이 word embedding word가 된다
    * Sum of subword embedding
  - 결론 : 구현이 쉽고 빠른 오픈소스를 사용하는 것이 추천되며 두 개의 다른 알고리즘 결과물을 concat하여 사용하기도 함
+  
+TF-IDF :
+ - 정의 : 어떤 단어 w가 문서 d 내에서 얼마나 중요한지 나타내는 수치 (텍스트 마이닝에서 중요하게 사용)
+ - TF(Term Frequency) :
+  1. 단어의 문서 내에 출현한 횟수
+  2. 숫자가 클수록 문서 내에서 중요한 단어
+  3. 하지만, 'the'와 같은 단어도 TF 값이 큼
+ - IDF (Inverse Document Frequency) :
+  1. 그 단어가 출현한 문서의 숫자의 역수 (inverse)
+  2. 값이 클수록 'the' 와 같이 일반적으로 많이 쓰이는 단어
+
+Context Window (Co-occurrence)
+ - 정의 : 함께 나타나는 자료들을 활용
+ - 가정 : 
+  1. 의미가 비슷한 단어라면 쓰임새가 비슷할 것
+  2. 쓰임새가 비슷하기 때문에, 비슷한 문장 안에서 비슷한 역할로 사용될 것
+  3. 따라서 함께 나타나는 단어들이 유사할 것
+ ※ Context Window를 사용하여 Windowing을 실행
+  1. window의 크기라는 hyper-parameter 추가
+  2. 적절한 window 크기를 정하는 것이 중요
