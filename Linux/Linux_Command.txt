@@ -1,0 +1,61 @@
+sudo : Super user do/Substitute user do
+
+cat : 파일 내용 출력
+ - cat -e /etc/passwd : 줄 맨 뒤에 $ (히든 공백 확인)
+ - cat -n /etc/passwd : 줄 번호 출력
+
+W : 서버 접속 확인
+ - w | wc -l : 서버 접속 중인 사람 수 확인
+ - sudo lastb | wc -l : 해킹 시도 수 확인
+
+ls : List
+ - ls -a : 숨겨진 파일(.확장자 file)
+ - ls -l : 해당 위치 파일 출력
+
+echo : 내용 출력
+ - echo -n : 뉴라인 제외
+ - echo -e : Escape 코드 지원
+ - echo -E : Escape 코드 미지원
+touch : 파일 생성
+rm : 파일 삭제
+more : 페이지 별 출력 확인
+less : 세부 내용 출력 확인 (memory를 덜 잡아먹음)
+mkdir/rmdir : 폴더 생성/삭제
+mv : 파일 이동
+file : 파일 속성 출력
+
+Re-direction :
+ > : output (출력/기존 파일 덮어씀)
+ >> : append (기존 파일 누적)
+ 2> : error (실패한 결과물을 파일로 출력)
+ 2>& : merge ()
+ < : stdin ()
+ << : delimiter (표준 입력으로부터 end 값이 들어올 때까지 입력)
+ 
+ 출력 장치 유형 :
+  - stdin : 입력장치 / 장치 번호 0
+  - stdout : 표준출력 / 장치 번호 1
+  - stderr : 에러출력 / 장치 번호 2
+
+ 파이프(|) : 출력 값 프로세스 간 전달
+  ex) ls -l | grep hello (출력 값 내에서 검색)
+  ex) ls -l | wc -l (출력 값 내에서 줄 개수 확인)
+  ex) cat hello.txt | more (출력 값 내에서 페이징 처리)
+
+
+cd : 위치 변경
+ - cd ~ : Base로 이동
+ - cd - : 이전 위치로 이동
+
+
+ln -s  : 소프트 링크 생성(바로가기)
+ - 특징 : 
+  1. 작은 용량 사용
+  2. 웹 서버 만들 때 사용
+ln [name] : 하드 링크 생성(포인터 생성)
+ - 특징 :
+  1. 시스템에 저장된 메모리의 위치를 가르키는 포인터를 생성하는 것
+  2. ls -il 로 inode 확인 가능
+
+whoami : 현 유저(나) 확인
+useradd/userdel : 유저 추가/삭제

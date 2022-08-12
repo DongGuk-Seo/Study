@@ -1,0 +1,59 @@
+Glossary and Hadoop Architecture
+ Distributed File System(DFS) : 분산 파일 시스템 - 네트워크를 통해 저변에 있는 스토리지를 관리하는 파일 시스템
+  - HDFS
+
+ Hadoop : 분산 파일 시스템의 병렬 처리 프레임워크에서 실행되는 플랫폼
+  - 제약 조건 없이 모든 유형의 데이터를 저장 가능 -> Hadoop은 읽기 스키마
+  - HDFS(Hadoop Distributed File System) : 블록 크기 덩어리로 분할되어 독립적인 단위로 저장 (1MB 파일이 128MB의 HDFS블록에 -> 1MB만 사용)
+ 
+ YARN(Yet Another Resource Negotiator) : Cluster Resource 요청 및 작업하기 위한 API 제공
+  - Resource Manager : Cluster의 APP' 작업 예약 및 Resource Monitoring
+   * YARN Scheduler : APP'에 자원 할당
+   * APP' Manager : Resource Manager에게 Container 요청
+  - Node Manager : Container와 해당 Resource 사용량 Monitoring 및 Resource Manager에게 보고
+   * Container : 특정 Resource가 할당된 특정 응용 프로그램 실행
+   * APP' Master : Container 내부에서 계산 실행 후 Client에 결과 반환
+  - Name Node : 메타데이터에 파일 시스템의 전체 디렉토리 구조의 스냅샷을 유지, 클러스터에서 위치를 추적(HDFS 내의 모든 파일에 대한 블록과 위치를 리스팅)
+    * NameNode는 'Master'라고 부르며 Hadoop Cluster에서 Single Point of Failure
+     -> system down 시 Master는 데이터 노드의 내용을 다른 서버에 복제
+    *- 무결함성을 가지진 않음
+  - Data Node : 모든 데이터를 HDFS에 저장
+ 
+ Map Reduce(MR) : Google에서 도입한 분산 데이터 처리 알고리즘 -> Cluster 환경에서 대용량 데이터 병렬 처리에 효과
+  - Spark와 MR의 차이점 : MR은 영구 저장소를 사용 / Spark는 메모리에서 RDD(Resillient Distributed Data)를 사용
+
+ HDFS
+  - 특징
+   * 128MB를 효율적이라 많이 사용하나 다른 블록 크기로도 사용을 할 수 있음 (2GB보다 크면 Signed 32-bit integer overflow 발생할 수 있으니 주의)
+  
+  - 작업 시간
+   * Seek time : 파일의 첫 번째 블록을 찾는 시간
+    -> 블록의 크기가 크면 추가 seek 오버헤드 없이 한번의 seek에서 읽을 수 있는 데이터 양 증가
+   * Transfer time : 연속된 데이터 블록을 읽는데 걸리는 시간
+  
+  - File formats
+   * 파일 형식의 특성
+    1. Read/Write의 최적화 시도
+    2. 압축 허용
+    3. 모두 분할 가능
+    4. 스키마 진화를 허용하기 때문에 열을 추가/업데이트/삭제를 할 수 있어 스키마 변경이 가능
+   * 데이터 타입 특성
+    1. txt,xml,csv,json 같은 파일 형식은 데이터 쿼리에 적합하지 않음
+    2. csv를 제외하고 분할할 수 없기에 블록 압축을 지원하지 않음
+     -> 데이터 로드 후 데이터 프레임 및 RDD로 변환하는 이유
+   * Row-based : 많은 열의 단일 레코드를 처리할 때 사용
+    1. Sequence files : 각 레코드에 대한 Key/Value 인코딩 (원래 Map Reduce용으로 설계되어 HDFS에 기본적으로 통합)
+     -> 레코드 형식은 Key/Value 구조 인코딩을 하지 않기 때문에 스키마 마이그레이션을 수행할 때 추가해줘야 함
+     -> 블록 수준의 압축을 지원 - 파일을 세그먼트로 분할하는 기능을 유지하며 파일 내용을 압축할 수 있음
+    2. Avro : 행 기반 직렬화 형식으로 복잡한 개체를 기본적으로 저장할 수 있게 파일에 직접 해당 내용의 스키마를 인코딩하여 Avro 데이터와 함께 저장
+     -> 스키마 변경이 있을 때 클릭스트림/이벤트 데이터 형식에 가장 적합
+     -> Trevni라는 열 기반 형식도 존재
+   * Column-based : 쿼리가 집계를 수행하기 위해 테이블의 소수의 열에 사용
+    1. Parquet : 컬럼 기반으로 저장된 바이너리 형식
+     -> Write 측면은 계산 집약적이나 Read를 위한 I/O 비용을 절감 가능
+     -> Nested 구조 지원
+    2. ORC(Optimized Row Columnar) : 행 모음을 저장하고 행 내에서 데이터는 열 형식으로 저장
+     -> Spark/Hive가 데이터를 처리할 때 가장 좋음
+     -> 원본 데이터 크기를 최대 75% 압축 가능
+     -> 관계형 데이터의 압축을 푸는데 걸리는 시간을 늘려 CPU 오버헤드를 증가시켜 Read 성능을 저하
+     
