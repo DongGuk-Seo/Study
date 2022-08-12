@@ -1,8 +1,9 @@
-Glossary and Hadoop Architecture
+Glossary of Hadoop
  Distributed File System(DFS) : 분산 파일 시스템 - 네트워크를 통해 저변에 있는 스토리지를 관리하는 파일 시스템
   - HDFS
 
  Hadoop : 분산 파일 시스템의 병렬 처리 프레임워크에서 실행되는 플랫폼
+  - 블록 크기 : Hadoop 1 : 기본 64MB / Hadoop 2 : 기본 128MB
   - 제약 조건 없이 모든 유형의 데이터를 저장 가능 -> Hadoop은 읽기 스키마
   - HDFS(Hadoop Distributed File System) : 블록 크기 덩어리로 분할되어 독립적인 단위로 저장 (1MB 파일이 128MB의 HDFS블록에 -> 1MB만 사용)
  
@@ -20,8 +21,19 @@ Glossary and Hadoop Architecture
   - Data Node : 모든 데이터를 HDFS에 저장
  
  Map Reduce(MR) : Google에서 도입한 분산 데이터 처리 알고리즘 -> Cluster 환경에서 대용량 데이터 병렬 처리에 효과
+  - 절차 (JVM : Mapper, Reducer)
+   1. Mapper가 입력 데이터를 처리 -> 정렬 및 셔플에 Key-Value 쌍을 출력
+   2. 데이터가 정렬되고 분할
+   3. 네트워크를 통해 정렬 및 분할된 데이터를 데이터를 읽는 Reducer로 전송
+   4. Reducer에서 여러 작업을 수행
+  - 수행 처리
+   * Parsing
+   * Transformation
   - Spark와 MR의 차이점 : MR은 영구 저장소를 사용 / Spark는 메모리에서 RDD(Resillient Distributed Data)를 사용
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Hadoop Architecture
  HDFS
   - 특징
    * 128MB를 효율적이라 많이 사용하나 다른 블록 크기로도 사용을 할 수 있음 (2GB보다 크면 Signed 32-bit integer overflow 발생할 수 있으니 주의)
@@ -30,7 +42,7 @@ Glossary and Hadoop Architecture
    * Seek time : 파일의 첫 번째 블록을 찾는 시간
     -> 블록의 크기가 크면 추가 seek 오버헤드 없이 한번의 seek에서 읽을 수 있는 데이터 양 증가
    * Transfer time : 연속된 데이터 블록을 읽는데 걸리는 시간
-  
+
   - File formats
    * 파일 형식의 특성
     1. Read/Write의 최적화 시도
@@ -56,4 +68,77 @@ Glossary and Hadoop Architecture
      -> Spark/Hive가 데이터를 처리할 때 가장 좋음
      -> 원본 데이터 크기를 최대 75% 압축 가능
      -> 관계형 데이터의 압축을 푸는데 걸리는 시간을 늘려 CPU 오버헤드를 증가시켜 Read 성능을 저하
-     
+
+ Zookeeper : Node 및 클러스터의 zoo를 관리/ 구성 관리 / 자동 클러스터 Leader 선출 / 자동 장애 복구 / 네이밍 서비스를 포함한 Cluster management
+  -> 모든 Node는 원자 브로드캐스트를 사용 - Leader는 변경사항을 Follower Node로 브로드캐스트 - Follower Node는 변경 사항을 Leader에게 알림
+  -> 데이터가 파일 시스템에 성공적으로 기록될 때까지 인메모리 DB에 커밋되지 않음
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Glossary of Hive
+ Apache Hive : Hadoop의 데이터 웨어하우징 오픈 소스 프레임워크 (SQL을 이용)
+  -> JDBC/ODBC 커넥터와 통합이 용이
+  - Hive : Map Reduce 작업을 실행하는 데이터 웨어하우스 겸 SQL 유사 엔진
+
+ Hive Metastore : Meta Data 및 테이블 스키마와 같은 파티션을 관계형 데이터베이스에 저장
+
+ Hive CLI/Beeline : HiveQL 명령을 수락하고 파싱하는 HiveQL 명령을 실행하기 위한 기본 인터페이스
+  -> Hive CLI는 HDFS 및 Hive 메타스토어에 직접 연결되어 호스트에서만 사용 가능 / Beeline 사용자는 Hive Server를 통해 JDBC 드라이버를 Hive하고 쿼리를 실행
+ 
+ HiveQL : Hive에서 SQL의 dialect인 Query language (MySQL에 영향을 많이 받음)
+
+ SerDE(Serializer/Deserializer) : Avro, ORC, RegEx, Thrift, Parquet, CSV, Json 등
+
+ HBase : 구글의 Bigtable을 모델로 하고 Java로 작성된 오픈 소스 비관계형 분산 데이터베이스
+  -> 트랜잭션 실시간 처리 및 방대한 양의 데이터에 대한 랜덤 읽기/쓰기 액세스가 필요한 OLTP 사용 사례에 적합
+ 
+ Zookeeper : HBase 클러스터의 HMaster, Region 서버를 포함한 모든 HBase 구성 요소의 상태를 유지 관리
+
+ Region : HBase에서 수평적 확장성을 제공하는 확장성의 기본 단위 -> 테이블 데이터의 하위 집합이며 기본적으로 함께 저장되는 연속적이고 정렬된 행 범위
+ RegionServer : 일련의 Region 서비스를 담당하며 하나의 Region은 하나의 RegionServer에서만 서비스 가능
+ 
+ HMaster : 시작 시 RegionServer에 Region을 할당하고 클러스터의 Region을 조정하고 관리 작업을 실행
+  -> 클라이언트는 테이블 생성/삭제/구조변경을 위해 HMaster에 문의
+
+ Meta table : 클러스터의 RegionServer에 대한 Region의 위치 및 매핑을 저장
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Hive Architecture
+ Hive 구성요소 :
+  1. Hive CLI/Beeline : Metastore에 대한 연결을 포함한 Hive Client 또는 Driver Application이 로컬 시스템에 배포될 때 사용
+  2. Hive Driver Application :
+   - 작업 요소 :
+    * HiveQL Parsing
+    * 쿼리 실행 계획
+    * 쿼리 작업을 Hadoop에 제출
+    * 쿼리 실행 진행률 모니터링
+  3. Hive Object : 데이터베이스와 테이블로 이루어진 객체
+  4. Hive Metastore : RDBMS와 Data Nucleus라는 개방형 ORM(Object Relational Model) 계층을 사용하여 Hive Meta Data를 저장
+ 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+HBase Architecture
+ HBase 구성요소 :
+  1. Zookeeper : 라이브 클러스터 상태 유지 및 구성 관리 / 서버와 사용자 간 구성 정보 및 통신 유지 관리에 사용
+  2. HMaster : Region의 할당을 조정, 서버 상태 확인 / DDL(Create/Delete Tables) 처리
+  3. RegionServer :
+   - 구성 요소
+    * Block Cache(Read Cache) : 자주 액세스하는 데이터를 메모리에 저장 / 가장 적게 액세스하는 데이터를 축출
+    * Memstore(Write Cache) : 들어오는 모든 데이터를 저장
+    * WAL(Write-Ahead Log) : 사용자는 쓰기 요청이 있을 때마다 permanent storage에 유지되거나 커밋되지 않은 새 데이터를 WAL에 쓰고 저장
+    * HFile : HDFS에 저장되며 Memstore가 가득 차면 데이터가 덤프되는 장소
+    * Hcatalog : Row key 목록과 시스템의 모든 영역 위치를 유지하는 Key-Value 쌍 HBase Table
+    * HLog : Memstore의 모든 쓰기는 HLog라는 레이블이 지정된 파일과 함께 디스크에 유지
+  4. Client
+  5. Region
+
+ HBase Data Model
+  1. Tables
+  2. Row Key
+  3. Column Family
+  4. Column Qualifier
+  5. Cell
+
+ 실행 절차
+  - 사용자가 HBase에 Read/Write 요청 -> Zookeeper에서 META Table 위치를 검색 -> Meta Table에서 해당 Row 키의 서버 위치를 요청하고 캐시
