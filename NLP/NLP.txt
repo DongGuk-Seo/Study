@@ -143,26 +143,6 @@ Mini-batch :
   4. 각 mini-batch별 tensor 구성 및 padding
   5. 학습 시 mini-batch를 shuffling 하여 iterative하게 반환
 
-Word-Embedding :
- - Word2Vec : 주변 단어를 예측하도록 하는 과정에서 적절한 단어의 임베딩을 할 수 있다
-  1. 종류 : CBOW (Input:Words -> Output:Predicted a word)/Skip-gram (Input:a word -> Output:Predicted similar words)
-  2. 특징 : 
-   * Non-linear activation func이 없음
-   * 기본적인 개념은 Auto-Encoder와 비슷
-   * Classification
-  3. 단점 : 
-   * 타 방법에 비해 느리다.
-   * 출현 빈도가 적은 단어는 벡터가 정확하지 않다.
- - GloVe : 단어 x와 윈도우 내에 함께 출현한 단어들의 출현 빈도를 맞추도록 훈련 (Regression)
-  1. 장점 : 
-   * 출현 빈도가 적은 단어에 대해서는 loss의 기여도를 낮추어 출현 빈도가 적은 단어에 대한 부정확성 보조
-   * Word2Vec에 비해 더 빠르다 (전체 Corpus에 대해 각 단어 별 co-occurrence를 구한 후, regression을 수행)
- - FastText : 기존 Word2Vec의 저빈도 단어에 대한 학습과 Oov의 대처가 어려움에 따라 개발된 방법
-  1. 절차 : 단어를 subword로 나눔 -> Skip-Gram을 활용하여, 각 subword에 대한 embedding vector에 주변 단어의 context vector를 곱하여 더함 -> 이 값이 최대가 되도록 학습
-  2. 특징 :
-   * 최종적으로 각 subword에 대한 embedding vector의 합이 word embedding word가 된다
-   * Sum of subword embedding
- - 결론 : 구현이 쉽고 빠른 오픈소스를 사용하는 것이 추천되며 두 개의 다른 알고리즘 결과물을 concat하여 사용하기도 함
   
 TF-IDF :
  - 정의 : 어떤 단어 w가 문서 d 내에서 얼마나 중요한지 나타내는 수치 (텍스트 마이닝에서 중요하게 사용)
@@ -183,3 +163,24 @@ Context Window (Co-occurrence)
  ※ Context Window를 사용하여 Windowing을 실행
   1. window의 크기라는 hyper-parameter 추가
   2. 적절한 window 크기를 정하는 것이 중요
+
+Word-Embedding :
+ - Word2Vec : 주변 단어를 예측하도록 하는 과정에서 적절한 단어의 임베딩을 할 수 있다
+  1. 종류 : CBOW (Input:Words -> Output:Predicted a word)/Skip-gram (Input:a word -> Output:Predicted similar words)
+  2. 특징 : 
+   * Non-linear activation func이 없음
+   * 기본적인 개념은 Auto-Encoder와 비슷
+   * Classification
+  3. 단점 : 
+   * 타 방법에 비해 느리다.
+   * 출현 빈도가 적은 단어는 벡터가 정확하지 않다.
+ - GloVe : 단어 x와 윈도우 내에 함께 출현한 단어들의 출현 빈도를 맞추도록 훈련 (Regression)
+  1. 장점 : 
+   * 출현 빈도가 적은 단어에 대해서는 loss의 기여도를 낮추어 출현 빈도가 적은 단어에 대한 부정확성 보조
+   * Word2Vec에 비해 더 빠르다 (전체 Corpus에 대해 각 단어 별 co-occurrence를 구한 후, regression을 수행)
+ - FastText : 기존 Word2Vec의 저빈도 단어에 대한 학습과 Oov의 대처가 어려움에 따라 개발된 방법
+  1. 절차 : 단어를 subword로 나눔 -> Skip-Gram을 활용하여, 각 subword에 대한 embedding vector에 주변 단어의 context vector를 곱하여 더함 -> 이 값이 최대가 되도록 학습
+  2. 특징 :
+   * 최종적으로 각 subword에 대한 embedding vector의 합이 word embedding word가 된다
+   * Sum of subword embedding
+ - 결론 : 구현이 쉽고 빠른 오픈소스를 사용하는 것이 추천되며 두 개의 다른 알고리즘 결과물을 concat하여 사용하기도 함
